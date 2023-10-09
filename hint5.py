@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib as plt
 
-@st.cache_data
+@st.cache  # Correcting the cache decorator
 def load_data():
     return pd.read_sas('hints5_cycle4_public.sas7bdat')
 
@@ -17,7 +17,7 @@ plot_choice = st.sidebar.selectbox(
 
 if plot_choice == "Line Plot of DRA":
     st.write("Displaying Line Plot of DRA")
-    fig, ax = plt.pyplot.subplots()
+    fig, ax = plt.pyplot.subplots()  # Using plt.pyplot for subplots
     ax.plot(df['DRA'])
     ax.set_title('Line Plot of DRA')
     ax.set_xlabel('Index')
@@ -26,7 +26,7 @@ if plot_choice == "Line Plot of DRA":
 
 elif plot_choice == "Histogram of Weekly Minutes of Moderate Exercise":
     st.write("Displaying Histogram of Weekly Minutes of Moderate Exercise")
-    fig, ax = plt.pyplot.subplots()
+    fig, ax = plt.pyplot.subplots()  # Using plt.pyplot for subplots
     ax.hist(df['WeeklyMinutesModerateExercise'].dropna(), bins=30) 
     ax.set_title('Histogram of Weekly Minutes of Moderate Exercise')
     ax.set_xlabel('Weekly Minutes of Moderate Exercise')
