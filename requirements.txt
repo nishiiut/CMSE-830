@@ -1,3 +1,4 @@
-pandas==2.1.0 
-matplotlib.pyplot==3.7.2
-sas7bdat==2.2.3 
+matplotlib==3.7.2
+pandas==2.1.1
+seaborn==0.13.0
+streamlit==1.26.0
