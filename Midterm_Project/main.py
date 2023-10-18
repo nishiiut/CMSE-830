@@ -1,5 +1,3 @@
-# Streamlit app for the plot with faceting
-
 import streamlit as st
 import pandas as pd
 import altair as alt
