@@ -1,13 +1,13 @@
 import pandas as pd
 import numpy as np
 
-path = "data"
+# path = "data"
 
 # Read in data
-hints5_cycle1_public = pd.read_sas(f"{path}/hints5_cycle1_public.sas7bdat")
-hints5_cycle3_public = pd.read_sas(f"{path}/hints5_cycle3_public.sas7bdat")
-hints5_cycle4_public = pd.read_sas(f"{path}/hints5_cycle4_public.sas7bdat")
-hints6_public = pd.read_sas(f"{path}/hints6_public.sas7bdat")
+hints5_cycle1_public = pd.read_sas("hints5_cycle1_public.sas7bdat")
+hints5_cycle3_public = pd.read_sas("hints5_cycle3_public.sas7bdat")
+hints5_cycle4_public = pd.read_sas("hints5_cycle4_public.sas7bdat")
+hints6_public = pd.read_sas("hints6_public.sas7bdat")
 
 # Prep data for each survey cycle
 hints5_cycle1_public['survey_year'] = 2017
