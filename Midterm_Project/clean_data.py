@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-path = "data/"
+path = "data"
 
 # Read in data
 hints5_cycle1_public = pd.read_sas(f"{path}/hints5_cycle1_public.sas7bdat")
