@@ -1,3 +1,5 @@
+# Streamlit app for the plot with faceting
+
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -12,7 +14,7 @@ The digital era has brought about significant transformations in various sectors
 
 ## Objective
 
-The primary objectives of this study are: (1) to examine patients' access of patient portals for various demographic categories over time, (2) to analyze the disparities in patient provider communication and portal access across various demographic groups, including sex, age, race, ethnicity, education level, and location, and (3) to understand the correlation between access of patient portals and patient provider communication,
+The primary objectives of this study are: (1) to examine patients' access of patient portals for various demographic categories over time, (2) to understand the correlation between access of patient portals and patient provider communication, and (3) to analyze the disparities in patient provider communication and portal access across various demographic groups, including sex, age, race, ethnicity, education level, and location.
 
 Such an exploration is crucial because effective utilization of the patient portals may significantly influence health outcomes. Addressing disparities in access of portals through improvements in patient communication may ensure equitable health benefits for all. This type of data exploration should also shed light on the areas requiring policy interventions.
 
@@ -81,10 +83,6 @@ chart = alt.Chart(yes_grouped).mark_line().encode(
 st.altair_chart(chart)
 
 
-st.markdown("""
-### Part 2: Disparities in patient provider communication    
-""")
-
 x_variable_map = {
     'SpentEnoughTime': 'spend enough time with you?',
     'InvolvedDecisions': 'involve you in decisions about your health care as much as you wanted?',
@@ -97,56 +95,24 @@ x_variable_map = {
 
 spent_enough_time_order = ['Never', 'Sometimes', 'Usually', 'Always']
 
-selected_group = st.selectbox(
-    "Choose the variable to group by for plot 2:",
-    list(column_map.values())
-)
-
-# Dropdown to select the year
-selected_year_2 = st.selectbox("Choose the year for plot 2:", [2017, 2019, 2020, 2022])
-
-
-group_variable_new = [col for col, label in column_map.items() if label == selected_group][0]
-
-selected_x_question_new = st.selectbox(
-    "Choose the x variable: In the past 12 months how often did your doctors, nurses, or other health professionals...:",
-    list(x_variable_map.values())
-)
-
-x_variable_new = [col for col, question in x_variable_map.items() if question == selected_x_question_new][0]
-
-# Calculate data for the new plot
-year_subset = combined_df[combined_df['survey_year'] == selected_year_2]
-grouped_df_new = year_subset.groupby([group_variable_new, x_variable_new]).size().reset_index(name='counts')
-total_new = year_subset.groupby(group_variable_new).size().reset_index(name='total')
-grouped_df_new = grouped_df_new.merge(total_new, on=group_variable_new)
-grouped_df_new['proportion'] = grouped_df_new['counts'] / grouped_df_new['total']
-
-# Base chart for the new plot
-base_new = alt.Chart(grouped_df_new).mark_bar().encode(
-    x=alt.X(f'{x_variable_new}:N', sort=spent_enough_time_order, title=None),  # Remove title here
-    y=alt.Y('proportion:Q', axis=alt.Axis(format='%')),
-    color=f'{x_variable_new}:N',
-    tooltip=[group_variable_new, x_variable_new, 'proportion']
-).properties(
-    width=100
-)
-
-# Facet the new chart
-chart_new = base_new.facet(
-    column=alt.Column(f'{group_variable_new}:N', sort=spent_enough_time_order, header=alt.Header(labelOrient="top", title=f"{x_variable_new}", titleOrient="bottom")),  # Adjust the title here
-    spacing=15
-).resolve_scale(
-    x='shared'
-).properties(
-    title=f"Proportion of each option in '{x_variable_new}' by '{group_variable_new}' for the year {selected_year_2}"
-)
-
-st.altair_chart(chart_new)
-
 
 st.markdown("""
-### Part 3: Relationship between access of patient portals and patient provider communication    
+### Part 2: Relationship between access of patient portals and patient provider communication
+Previous research suggests a potential correlation between effective patient-doctor communication and increased utilization of patient portals. Consequently, the subsequent phase of this project aims to explore the relationship between patient portal usage and patient-provider communication.
+
+To assess patient-provider communication, respondents were asked seven questions reflecting their experiences over the past 12 months. Participants indicated their level of agreement using a four-point scale: always, usually, sometimes, never. The questions addressed whether health professionals:
+
+• Allowed patients to ask all health-related questions they had.
+• Attended to their feelings and emotions adequately.
+• Involved them in health care decisions to the desired extent.
+• Ensured their understanding of health care instructions.
+• Explained concepts in comprehensible terms.
+• Spent sufficient time with them.
+• Assisted them in navigating feelings of uncertainty about health matters.
+
+Subsequently, the distribution of respondents across different frequency categories for patient portal access (None, 1-2, 3-5, 6-9, or 10 or more times) was plotted against each response category (always, usually, sometimes, never) for the patient-provider communication questions.
+
+From the data, a trend emerged: the proportion of participants who reported no portal access decreased, while portal access increased when moving from the "Never" to the "Always" response for each patient-provider communication question. This suggests that enhanced communication between patients and doctors potentially boosts patients' willingness and capability to use portals.    
 """)
 
 # Use the questions in the dropdown
@@ -196,13 +162,64 @@ chart = base.facet(
 
 st.altair_chart(chart)
 
+st.markdown("""
+### Part 3: Disparities in patient provider communication
+From our findings in phase 1, we understand that disparities exist in portal access, and from phase 2, we have discerned a relationship between portal access and patient-provider communication. In the third phase of the project, we aim to investigate whether demographics that found it challenging to access portals also experienced lower levels of patient-provider communication. If this is true, enhancing patient-provider communication for these demographics could potentially boost their portal access.
+
+The data visualizations indicate that Hispanics and those without health insurance tend to report "never" more frequently (and "always" less frequently) in response to several patient-provider communication questions. This suggests that these demographics might be experiencing subpar patient-provider communication. Therefore, one could hypothesize that this insufficient communication is a factor in their decreased use of portals. While this is not a conclusive observation, it's an aspect that warrants deeper exploration.  
+""")
+
+selected_group = st.selectbox(
+    "Choose the variable to group by for final plot:",
+    list(column_map.values())
+)
+
+# Dropdown to select the year
+selected_year_2 = st.selectbox("Choose the year for final plot:", [2017, 2019, 2020, 2022])
 
 
+group_variable_new = [col for col, label in column_map.items() if label == selected_group][0]
+
+selected_x_question_new = st.selectbox(
+    "Choose the x variable: In the past 12 months how often did your doctors, nurses, or other health professionals...:",
+    list(x_variable_map.values())
+)
+
+x_variable_new = [col for col, question in x_variable_map.items() if question == selected_x_question_new][0]
+
+# Calculate data for the new plot
+year_subset = combined_df[combined_df['survey_year'] == selected_year_2]
+grouped_df_new = year_subset.groupby([group_variable_new, x_variable_new]).size().reset_index(name='counts')
+total_new = year_subset.groupby(group_variable_new).size().reset_index(name='total')
+grouped_df_new = grouped_df_new.merge(total_new, on=group_variable_new)
+grouped_df_new['proportion'] = grouped_df_new['counts'] / grouped_df_new['total']
+
+# Base chart for the new plot
+base_new = alt.Chart(grouped_df_new).mark_bar().encode(
+    x=alt.X(f'{x_variable_new}:N', sort=spent_enough_time_order, title=None),  # Remove title here
+    y=alt.Y('proportion:Q', axis=alt.Axis(format='%')),
+    color=f'{x_variable_new}:N',
+    tooltip=[group_variable_new, x_variable_new, 'proportion']
+).properties(
+    width=100
+)
+
+# Facet the new chart
+chart_new = base_new.facet(
+    column=alt.Column(f'{group_variable_new}:N', sort=spent_enough_time_order, header=alt.Header(labelOrient="top", title=f"{x_variable_new}", titleOrient="bottom")),  # Adjust the title here
+    spacing=15
+).resolve_scale(
+    x='shared'
+).properties(
+    title=f"Proportion of each option in '{x_variable_new}' by '{group_variable_new}' for the year {selected_year_2}"
+)
+
+st.altair_chart(chart_new)
 
 
 st.markdown("""
 
 ## Conclusion
 
-In the age of digital health and telemedicine, understanding the patterns and disparities of patients' access to online portals is very important. This project emphasizes the need for equal access to health technologies and promotes optimal health outcomes for all.
+In the era of digital health and telemedicine, comprehending the nuances of how patients access online portals is pivotal. Our project illuminated clear disparities in portal access and underscored a distinct relationship between this access and the quality of patient-provider communication. Notably, specific demographics, like Hispanics and those without health insurance, showcased both reduced portal access and subpar patient-provider communication. Policies aimed at bolstering patient-provider communication for these groups might offer a tangible solution to bridge these disparities in portal access. This project emphasizes the need for equal access to health technologies and promotes optimal health outcomes for all.
 """)
