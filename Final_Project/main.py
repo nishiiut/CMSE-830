@@ -20,10 +20,11 @@ with tab1:
 
         # What is RNA-Seq?
         RNA sequencing (RNA-seq) is a next-generation sequencing (NGS) method used to study the quantity and sequences of RNA in a sample. It provides insights into the cellular transcriptome, actively expressed genes at a given moment. This method is crucial for understanding gene expression patterns and alterations in different conditions, such as disease states or environmental changes.
+        RNA-seq lets you capture all of the RNA that is being expressed at any given moment!
 
         # The Dataset
         "In vitro" refers to studies conducted with microorganisms, cells, or biological molecules outside their normal biological context. These are typically done in controlled laboratory environments, like petri dishes or test tubes.
-        "In vivo" studies are carried out in living organisms. These experiments provide a more comprehensive understanding of biological phenomena in the context of the organism's natural environment.
+        "In vivo" studies are carried out in living organisms. These experiments provide a more comprehensive understanding of biological phenomena in the context of the organism's natural environment (in a living organism)
         Having results from both in vitro and in vivo experiments is beneficial as it combines the controlled specificity of in vitro studies with the comprehensive relevance of in vivo studies. This dual approach can validate findings across different levels of biological complexity and enhance the understanding of biological processes.
 
         ## In Vitro Experimental Design
@@ -99,7 +100,7 @@ with tab2:
     ))
 
     # Load data
-    df = pd.read_csv(file_option)
+    df = pd.read_csv(file_option).dropna()
 
     # Search bar for gene symbol
     search_query = st.text_input("Search for a Gene Symbol")
@@ -122,6 +123,8 @@ with tab2:
     Blue points represent genes with statistically significant changes in expression (p < 0.05).
 
     Note: Extreme outliers, especially those in blue, are often the focus of further investigation as they may represent genes with major roles in the response to experimental conditions.
+
+    **We can see how the in vitro results are much cleaner compared to the in vivo results.**
     """)
 
     # Altair Plotting for significance
@@ -164,8 +167,8 @@ with tab3:
     ), key='file2')
 
     # Load data for comparison
-    df1 = pd.read_csv(file_option1)
-    df2 = pd.read_csv(file_option2)
+    df1 = pd.read_csv(file_option1).dropna()
+    df2 = pd.read_csv(file_option2).dropna()
 
     # Merge datasets on 'Symbol' for comparison
     merged_df = pd.merge(df1[['Symbol', 'log2FoldChange']], df2[['Symbol', 'log2FoldChange']], on='Symbol', suffixes=('_1', '_2'))
@@ -218,6 +221,8 @@ with tab3:
         **Conclusion/Recommendations:**  
         Reassessing the in vivo experimental design to reduce variability and improve the correlation with in vitro results could be beneficial.
         The moderate to high correlations in certain in vitro comparisons suggest specific areas for focused study, especially regarding the adaptive responses of adipocytes to temperature changes.
+
+        The scientists should continue to work with the in vitro results, but should be more skeptical about using the in vivo results. 
 
         """)
 
