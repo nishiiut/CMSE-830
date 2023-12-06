@@ -74,7 +74,6 @@ with tab2:
     2. **baseMean:** The average expression level of the gene across all samples. A higher baseMean indicates higher average expression.
     3. **log2FoldChange:** The logarithm (base 2) of the fold change in gene expression. A positive value indicates upregulation under experimental conditions, while a negative value indicates downregulation.
     4. **padj:** Adjusted p-value. This value accounts for multiple testing corrections, reducing false positives. A lower padj suggests a higher significance of the gene expression change.
-    5. **log2fc_se:** The standard error of the log2 fold change. A lower value indicates higher confidence in the fold change estimate.
 
     Example Interpretation for the In Vivo Experiment
     Consider the example data for the gene 'Gnai3':  
@@ -83,8 +82,7 @@ with tab2:
     2. **baseMean:** 2045.592068 - This value indicates the average expression level of Gnai3 is relatively high across all samples.
     3. **log2FoldChange:** -0.176436068 - Indicates a slight downregulation of Gnai3 in mice housed at 22°C compared to 29°C.
     4. **padj: 0.12836299** - This adjusted p-value, being higher than typical significance thresholds (e.g., 0.05), suggests that the observed change in Gnai3 expression might not be statistically significant.
-    5. **log2fc_se: 0.035** - The standard error is relatively small, suggesting the estimate of fold change is precise.
-
+    
     """)
 
     st.markdown("""
@@ -206,7 +204,7 @@ with tab3:
     st.markdown("""
         The linear regression analysis conducted on various pairings of RNA-seq data from in vitro and in vivo experiments has yielded insights into the correlations between different experimental conditions. The key metrics used in this analysis were Mean Squared Error (MSE), R-Squared, and the correlation coefficient (R).
 
-        **In Vitro Comparisons:**  
+        **Comparisons:**  
 
         1. Cold One vs Zero and Cold Twelve vs One: Low correlation (R = 0.1466), suggesting minimal linear relationship.
         2. Cold One vs Zero and Cold Twelve vs Zero: Moderate to high correlation (R = 0.6503). This indicates a more substantial linear relationship, suggesting that the changes from day 1 to day 12 are more linearly related to the initial changes from the control state.
@@ -214,7 +212,7 @@ with tab3:
         4. In Vitro vs In Vivo Comparisons: All comparisons showed very low correlation, with R values ranging from 0.0161 to 0.0650. This indicates a weak linear relationship between in vitro and in vivo datasets.
 
         **Possible reasons:**  
-        Variability in In Vivo Experiments: The low correlation between in vitro and in vivo results may be attributed to the increased complexity and variability inherent in in vivo conditions. In vivo environments are influenced by a myriad of factors that are not present in the controlled in vitro settings.
+        Variability in In Vivo Experiments: The low correlation between in vitro and in vivo results may be attributed to the increased complexity and variability inherent in in vivo conditions. In vivo environments are influenced by a myriad of factors that are not present in the controlled in vitro settings.  
         Linear vs Non-linear Responses: The biological processes and gene expression changes in response to temperature might not always follow linear patterns, especially in the dynamic in vivo environments.
 
 
