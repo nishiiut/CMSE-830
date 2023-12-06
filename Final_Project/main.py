@@ -37,6 +37,8 @@ with tab1:
         The in vivo experiment investigates RNA changes in the gluteal portion of the posterior subcutaneous adipose tissue in mice. Mice were housed at 22°C (test condition) or 29°C (control condition). RNA-Seq was performed to compare the RNA profiles under these two temperature conditions.
         The raw data for this can be accessed via this link: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE169142
 
+        In Summary, the in vitro experiment involved exposing cells to a cold condition, and the in vivo experiment involved exposing the mouse to a cold condition.
+        
         # Goal:
         The goal of this app is to allow users to explore the RNA-Seq data and compare the results from different experiments. This can help users identify genes of interest and compare their expression levels across different conditions. Users can also compare the expression levels of the same gene across different experiments to see if there are any correlations.
 
@@ -53,18 +55,18 @@ with tab2:
     st.markdown("""
     # What the RNA-seq Dataset Looks Like:
     The dataset consists of four RNA-seq data files, each representing a different experimental comparison. Here's a breakdown of what each file contains:
-    1. **RNAseq_mouse_invitro_cold_one_vs_zero:**
-    Comparison: Adipocytes exposed to 31°C for 1 day versus control adipocytes cultured at 37°C.
-    Purpose: To observe early gene expression changes due to a mild temperature drop.
-    2. **RNAseq_mouse_invitro_cold_twelve_vs_one:**
-    Comparison: Adipocytes exposed to 31°C for 12 days versus those exposed for 1 day.
-    Purpose: To study the progression of gene expression changes over a longer cold exposure.
-    3. **RNAseq_mouse_invitro_cold_twelve_vs_zero:**
-    Comparison: Adipocytes exposed to 31°C for 12 days versus control adipocytes at 37°C.
-    Purpose: To identify the cumulative effect of long-term cold exposure on gene expression.
-    4. **RNAseq_mouse_invivo_cold_22_vs_29:**
-    Comparison: Mice housed at 22°C versus those at 29°C.
-    Purpose: To explore in vivo responses of adipose tissue to cooler ambient temperatures.
+    1. **RNAseq_mouse_invitro_cold_one_vs_zero:**  
+    Comparison: Adipocytes exposed to 31°C for 1 day versus control adipocytes cultured at 37°C.  
+    Purpose: To observe early gene expression changes due to a mild temperature drop.  
+    2. **RNAseq_mouse_invitro_cold_twelve_vs_one:**  
+    Comparison: Adipocytes exposed to 31°C for 12 days versus those exposed for 1 day.  
+    Purpose: To study the progression of gene expression changes over a longer cold exposure.  
+    3. **RNAseq_mouse_invitro_cold_twelve_vs_zero:**  
+    Comparison: Adipocytes exposed to 31°C for 12 days versus control adipocytes at 37°C.  
+    Purpose: To identify the cumulative effect of long-term cold exposure on gene expression.  
+    4. **RNAseq_mouse_invivo_cold_22_vs_29:**  
+    Comparison: Mice housed at 22°C versus those at 29°C.  
+    Purpose: To explore in vivo responses of adipose tissue to cooler ambient temperatures.  
 
     # Differential Expression Analysis
     Each file contains results from differential expression analysis. This analysis identifies genes whose expression levels significantly differ between the experimental and control groups. It's key for understanding how conditions like temperature affect gene activity.
@@ -150,7 +152,11 @@ with tab3:
     st.header("Compare Two Datasets")
 
     st.markdown("""
-        In order to use the app, select the two data files you would like to compare using linear regression, then click the button "Run Linear Regression"
+        In order to use the app, select the two data files you would like to compare using linear regression, then click the button "Run Linear Regression". After running you get the following:   
+          
+        **Mean Squared Error (MSE):** This measures the average of the squares of the errors, i.e., the average squared difference between the estimated values and the actual value. A lower MSE indicates a better fit of the regression model to the data.  
+        **R-Squared:** This represents the proportion of the variance for the dependent variable that's explained by the independent variables in the model. A higher R-Squared value indicates a better fit.  
+        **Correlation Coefficient (R):** This measures the strength and direction of a linear relationship between two variables. A value close to 1 or -1 indicates a strong linear relationship, while a value around 0 indicates a weak relationship.  
     """)
 
     # File selection for comparison
@@ -169,7 +175,7 @@ with tab3:
     ), key='file2')
 
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-    
+
     # Load data for comparison
     df1 = pd.read_csv(f"{path}/{file_option1}").dropna()
     df2 = pd.read_csv(f"{path}/{file_option2}").dropna()
@@ -218,8 +224,8 @@ with tab3:
         4. In Vitro vs In Vivo Comparisons: All comparisons showed very low correlation, with R values ranging from 0.0161 to 0.0650. This indicates a weak linear relationship between in vitro and in vivo datasets.
 
         **Possible reasons:**  
-        Variability in In Vivo Experiments: The low correlation between in vitro and in vivo results may be attributed to the increased complexity and variability inherent in in vivo conditions. In vivo environments are influenced by a myriad of factors that are not present in the controlled in vitro settings.  
-        Linear vs Non-linear Responses: The biological processes and gene expression changes in response to temperature might not always follow linear patterns, especially in the dynamic in vivo environments.
+        * Variability in In Vivo Experiments: The low correlation between in vitro and in vivo results may be attributed to the increased complexity and variability inherent in in vivo conditions. In vivo environments are influenced by a lot of factors that are not present in the controlled in vitro settings.  
+        * Linear vs Non-linear Responses: The biological processes and gene expression changes in response to temperature might not always follow linear patterns, especially in the dynamic in vivo environments.
 
 
         **Conclusion/Recommendations:**  
