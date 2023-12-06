@@ -5,6 +5,8 @@ import altair as alt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
+import os
+
 
 # Set page title
 st.title("Gene Expression Analysis App")
@@ -96,9 +98,11 @@ with tab2:
         "RNAseq_mouse_invitro_cold_twelve_vs_zero.csv",
         "RNAseq_mouse_invivo_cold_22_vs_29.csv"
     ))
+    
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
     # Load data
-    df = pd.read_csv(file_option).dropna()
+    df = pd.read_csv(f"{path}/{file_option}").dropna()
 
     # Search bar for gene symbol
     search_query = st.text_input("Search for a Gene Symbol")
@@ -164,9 +168,11 @@ with tab3:
         "RNAseq_mouse_invivo_cold_22_vs_29.csv"
     ), key='file2')
 
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+    
     # Load data for comparison
-    df1 = pd.read_csv(file_option1).dropna()
-    df2 = pd.read_csv(file_option2).dropna()
+    df1 = pd.read_csv(f"{path}/{file_option1}").dropna()
+    df2 = pd.read_csv(f"{path}/{file_option2}").dropna()
 
     # Merge datasets on 'Symbol' for comparison
     merged_df = pd.merge(df1[['Symbol', 'log2FoldChange']], df2[['Symbol', 'log2FoldChange']], on='Symbol', suffixes=('_1', '_2'))
