@@ -244,6 +244,6 @@ with tab4:
         Uta Nishii is a first-year Masters student in Data Science at Michigan State University, where she is dedicated to applying her mathematical background to complex business and scientific problems. 
         Her professional goal is to utilize data science in practical, impactful ways, combining her academic knowledge with real-world applications. 
 
-        Outside of her academic pursuits, Uta is actively engaged in hobbies like karate and fashion. In karate, she finds a unique blend of physical skill and mental discipline, viewing it as more than a sport but a way of life that instills resilience and focus.
+        Outside of her academic pursuits, Uta is actively engaged in hobbies like karate. In karate, she finds a unique blend of physical skill and mental discipline, viewing it as more than a sport but a way of life that instills resilience and focus.
     """)
 
